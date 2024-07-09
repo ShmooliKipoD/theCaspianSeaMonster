@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SimplexNoise;
+using theCaspianSeaMonster.Interfaces;
 
 namespace theCaspianSeaMonster;
 
@@ -31,7 +32,10 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
+        Globals.WindowSize = new Point(
+                GraphicsDevice.Viewport.Width, 
+                GraphicsDevice.Viewport.Height
+            );
 
         base.Initialize();
     }
@@ -39,6 +43,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        Globals.SpriteBatch = _spriteBatch;
 
         _squareTexture = new Texture2D(GraphicsDevice, 1, 1);
         _squareTexture.SetData(new[] { Color.White });
@@ -49,10 +54,9 @@ public class Game1 : Game
         this._cols = GraphicsDevice.Viewport.Width / this._resolution;
         this._rows = GraphicsDevice.Viewport.Height / this._resolution;
 
+        Globals.Content = Content;
+
         Noise.Seed = 209323094; // Optional
-
-
-        // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
@@ -67,7 +71,7 @@ public class Game1 : Game
             this._yoff += 1;
         }
 
-        // TODO: Add your update logic here
+        Globals.Update(gameTime);
 
         base.Update(gameTime);
     }
