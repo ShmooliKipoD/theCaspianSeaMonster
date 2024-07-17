@@ -12,11 +12,12 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D _pixel;
-    private int _resolution = 10;
+    private SpriteStack _player;
+    private int _resolution = 3;
     private int _rows;
     private int _cols;
     private double _lastUpdateTime = 0;
-    private double _updateInterval = 1000 / 30;
+    private double _updateInterval = 1000 / 18;
     private int _zoff = 0;
 
     private int _yoff = 0;
@@ -56,6 +57,8 @@ public class Game1 : Game
 
         Globals.Content = Content;
 
+        _player = new (52, 70, Content.Load<Texture2D>("ship.stack"));
+
         Noise.Seed = 209323094; // Optional
     }
 
@@ -63,6 +66,8 @@ public class Game1 : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+
+            _player.Update(gameTime);
 
         if (gameTime.TotalGameTime.TotalMilliseconds - this._lastUpdateTime > this._updateInterval)
         {
@@ -82,12 +87,13 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
 
+
         Color color = Color.Blue;
-        for (int row = 0; row < this._rows; row++)
+        for (int row = 0; row < _rows; row++)
         {
-            for (int col = 0; col < this._cols; col++)
+            for (int col = 0; col < _cols; col++)
             {
-                int alpha = (int)Noise.CalcPixel3D(row , col, _zoff, 0.05f);
+                int alpha = (int)(Math.Pow(Noise.CalcPixel3D(row - _yoff , col, _zoff, 0.1f)/255,4)*255);
 
                 Color colorWithAlpha = new Color(color.R, color.G, color.B, alpha);
 
@@ -103,6 +109,9 @@ public class Game1 : Game
             }
         }
         _spriteBatch.End();
+
+        _player.Draw(gameTime);
+
 
         base.Draw(gameTime);
     }

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace theCaspianSeaMonster.Interfaces;
 
-class Sprite
+class Sprite : IDrawable
 {
     private Texture2D _texture;
     private Vector2 _position = new(40, 40);
@@ -13,7 +13,12 @@ class Sprite
     private int _frames = 0;
     private double _time = 0;
 
-    public Sprite(int width, int height, Texture2D texture, int frames)
+    public Sprite(
+            int width, 
+            int height, 
+            Texture2D texture, 
+            int frames
+        )
     {
         Width = width;
         Height = height;
@@ -26,9 +31,9 @@ class Sprite
 
     public int Height { get; set; }
 
-    internal void LoadContent() { }
+    public void LoadContent() { }
 
-    internal void Update(GameTime gameTime)
+    public void Update(GameTime gameTime)
     {
         if (Math.Abs(_time - gameTime.TotalGameTime.TotalMilliseconds) > 1000 / 7)
         {
@@ -38,7 +43,7 @@ class Sprite
         }
     }
 
-    internal void Draw(GameTime gameTime = null)
+    public void Draw(GameTime gameTime = null)
     {
         Globals.SpriteBatch.Begin();
 
@@ -52,7 +57,7 @@ class Sprite
                 Color.White,
                 0f,
                 _origin,
-                1f,
+                2f,
                 SpriteEffects.None,
                 0f
             );
