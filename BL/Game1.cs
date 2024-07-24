@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Penumbra;
 using SimplexNoise;
 using theCaspianSeaMonster.Interfaces;
 
@@ -24,22 +25,34 @@ public class Game1 : Game
 
     private Texture2D _squareTexture;
 
+    private PenumbraComponent _penumbra;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        _penumbra = new(this);
+        Components.Add(_penumbra);
     }
 
     protected override void Initialize()
     {
         Globals.WindowSize = new Point(
-                GraphicsDevice.Viewport.Width, 
+                GraphicsDevice.Viewport.Width,
                 GraphicsDevice.Viewport.Height
             );
 
         base.Initialize();
     }
+
+    PointLight _light = new PointLight
+    {
+        Scale = new(1000),
+        Position = new(400, 240),
+        Color = Color.White,
+        Intensity = 1f,
+        ShadowType = ShadowType.Solid
+    };
 
     protected override void LoadContent()
     {
@@ -57,9 +70,23 @@ public class Game1 : Game
 
         Globals.Content = Content;
 
-        _player = new (52, 70, Content.Load<Texture2D>("ship.stack"));
+        _player = new(52, 70, Content.Load<Texture2D>("ship.stack"));
 
         Noise.Seed = 209323094; // Optional
+
+
+        _penumbra.Lights.Add(
+            _light
+            );
+
+        _penumbra.Hulls.Add(
+            new Hull(
+                new Vector2(100, 100),
+                new Vector2(200, 100),
+                new Vector2(200, 200),
+                new Vector2(100, 200)
+                )
+        );
     }
 
     protected override void Update(GameTime gameTime)
@@ -67,13 +94,14 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-            _player.Update(gameTime);
+        _player.Update(gameTime);
 
         if (gameTime.TotalGameTime.TotalMilliseconds - this._lastUpdateTime > this._updateInterval)
         {
             this._lastUpdateTime = gameTime.TotalGameTime.TotalMilliseconds;
             this._zoff += 1;
             this._yoff += 1;
+            _light.Position = _light.Position + new Vector2(0, -2);
         }
 
         Globals.Update(gameTime);
@@ -83,32 +111,33 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        _penumbra.BeginDraw();
 
-        _spriteBatch.Begin();
+        GraphicsDevice.Clear(Color.White);
+        //_spriteBatch.Begin();
 
 
-        Color color = Color.Blue;
-        for (int row = 0; row < _rows; row++)
-        {
-            for (int col = 0; col < _cols; col++)
-            {
-                int alpha = (int)(Math.Pow(Noise.CalcPixel3D(row - _yoff , col, _zoff, 0.1f)/255,4)*255);
+        // Color color = Color.Blue;
+        // for (int row = 0; row < _rows; row++)
+        // {
+        //     for (int col = 0; col < _cols; col++)
+        //     {
+        //         int alpha = (int)(Math.Pow(Noise.CalcPixel3D(row - _yoff , col, _zoff, 0.1f)/255,4)*255);
 
-                Color colorWithAlpha = new Color(color.R, color.G, color.B, alpha);
+        //         Color colorWithAlpha = new Color(color.R, color.G, color.B, alpha);
 
-                _spriteBatch.Draw(_squareTexture,
-                        new Rectangle(
-                                col * _resolution,
-                                row * _resolution,
-                                _resolution,
-                                _resolution
-                            ),
-                        colorWithAlpha
-                    );
-            }
-        }
-        _spriteBatch.End();
+        //         _spriteBatch.Draw(_squareTexture,
+        //                 new Rectangle(
+        //                         col * _resolution,
+        //                         row * _resolution,
+        //                         _resolution,
+        //                         _resolution
+        //                     ),
+        //                 colorWithAlpha
+        //             );
+        //     }
+        // }
+        // _spriteBatch.End();
 
         _player.Draw(gameTime);
 
@@ -122,14 +151,14 @@ public class Game1 : Game
         float angle = (float)Math.Atan2(endPoint.Y - startPoint.Y, endPoint.X - startPoint.X);
 
         _spriteBatch.Draw(
-                _pixel, 
-                startPoint, 
-                null, 
-                color, 
-                angle, 
-                Vector2.Zero, 
-                new Vector2(distance, 1), 
-                SpriteEffects.None, 
+                _pixel,
+                startPoint,
+                null,
+                color,
+                angle,
+                Vector2.Zero,
+                new Vector2(distance, 1),
+                SpriteEffects.None,
                 0
             );
     }

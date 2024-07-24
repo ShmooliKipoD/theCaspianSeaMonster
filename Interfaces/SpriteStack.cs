@@ -13,7 +13,9 @@ class SpriteStack : IDrawable
     private Vector2 _position = new(400, 200);
     private Vector2 _origin;
 
-    private float _rotation = 0f;
+    private Effect _effect;
+
+    private float _rotation = 0.6f;
 
     public SpriteStack(
             int width, 
@@ -26,6 +28,7 @@ class SpriteStack : IDrawable
         _texture = texture;
         _frames = texture.Height / Height;
         _origin = new(width / 2, height / 2);
+        _effect = Globals.Content.Load<Effect>("Shaders/ShipColor");
     }
 
     public int Width { get; }
@@ -35,34 +38,39 @@ class SpriteStack : IDrawable
     {
         if (Math.Abs(_time - gameTime.TotalGameTime.TotalMilliseconds) > 1000 / 7)
         {
-            _rotation = _rotation + 0.05f;
             _time = gameTime.TotalGameTime.TotalMilliseconds;
         }
+        _rotation = _rotation + 0.05f;
     }
 
     public void Draw(GameTime gameTime = null)
     {
-        Globals.SpriteBatch.Begin();
+            Globals.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, _effect);
+
         for (int frame = 0; frame < _frames; frame++)
         {
+
             Globals.SpriteBatch.Draw(
                     _texture,
-                    new (_position.X, 
-                         _position.Y + frame),
-                    new (
-                        new Point(0, _texture.Height - frame * Height),
+                    new(_position.X,
+                         _position.Y + frame * 2),
+                    new(
+                        new Point(0, frame * Height),
                         new Point(Width, Height)
                     ),
+                    //frame > _frames - 7 ? Color.White : Color.Gray,
                     Color.White,
                     _rotation,
                     _origin,
-                    2.8f,
+                    2.7f,
                     SpriteEffects.None,
                     0f
                 );
+
         }
-        
-        Globals.SpriteBatch.End();
+            Globals.SpriteBatch.End();
+
+
     }
 
     public void LoadContent()
