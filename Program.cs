@@ -1,3 +1,5 @@
 ﻿
-using var game = new theCaspianSeaMonster.Game1();
+using theCaspianSeaMonster;
+
+using var game = new Game1();
 game.Run();
