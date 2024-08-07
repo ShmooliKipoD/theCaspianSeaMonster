@@ -1,5 +1,8 @@
 # The Caspian Sea Monster
 
+usfule links:
+- [awesome](https://github.com/aloisdeniel/awesome-monogame?tab=readme-ov-file)
+
 ## Trubleshout
 ### Mac OS
 #### fail to build on M1 Chip
