@@ -24,11 +24,12 @@ class Player : IGameObject
         ShadowType = ShadowType.Solid
     };
     
-    private SpriteStack _shipModel = new(
-                    52,
-                    70,
-                    Globals.Content.Load<Texture2D>("ship.stack"),
-                    Globals.Content.Load<Effect>("Shaders/ShipColor")
+    private SpriteAnimation _shipModel = new(
+                      32
+                    , 32
+                    , Globals.Content.Load<Texture2D>("Player/bluebirdSheet")
+                    , 1
+                    // , Globals.Content.Load<Effect>("Shaders/ShipColor")
                 );
 
     private Spotlight _light = new Spotlight

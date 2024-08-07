@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Autofac;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Penumbra;
@@ -11,7 +12,7 @@ namespace theCaspianSeaMonster;
 
 public class Game1 : Game
 {
-    private GraphicsDeviceManager _graphics;
+    // private GraphicsDeviceManager _graphics;
     private Player _player;
     private double _lastUpdateTime = 0;
     private double _updateInterval = 1000 / 18;
@@ -29,9 +30,9 @@ public class Game1 : Game
 
     public Game1()
     {
-        _graphics = new GraphicsDeviceManager(this);
-        Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        // _graphics = new GraphicsDeviceManager(this);
+        // Content.RootDirectory = "Content";
+        // IsMouseVisible = true;
         _penumbra = new(this);
         Components.Add(_penumbra);
         Globals.Penumbra = _penumbra;
@@ -128,5 +129,10 @@ public class Game1 : Game
         //_penumbra.Draw(gameTime);
 
         base.Draw(gameTime);
+    }
+
+    protected override void RegisterDependencies(ContainerBuilder builder)
+    {
+        // throw new NotImplementedException();
     }
 }

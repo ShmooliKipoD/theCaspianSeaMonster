@@ -1,5 +1,13 @@
 ﻿
+using System;
 using theCaspianSeaMonster;
 
-using var game = new Game1();
-game.Run();
+try
+{
+    using Game1 game = new ();
+    game.Run();
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
