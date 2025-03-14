@@ -1,12 +1,8 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SimplexNoise;
-using theCaspianSeaMonster.Interfaces;
 
 namespace theCaspianSeaMonster.BL;
 
-class Background : Interfaces.IDrawable
+class Background //: Interfaces.IDrawable
 {
     #region privates
 
@@ -34,7 +30,8 @@ class Background : Interfaces.IDrawable
 
     public void Draw(GameTime gameTime = null)
     {
-        Globals.SpriteBatch.Begin();
+        //TODO: need to fix this
+        // Globals.SpriteBatch.Begin();
 
         Color color = Color.Blue;
         for (int row = 0; row < _rows; row++)
@@ -44,19 +41,20 @@ class Background : Interfaces.IDrawable
                 int alpha = (int)(Math.Pow(Noise.CalcPixel3D(row - _yoff , col, _zoff, 0.1f)/255,4)*255);
 
                 Color colorWithAlpha = new Color(color.R, color.G, color.B, alpha);
-
-                Globals.SpriteBatch.Draw(_squareTexture,
-                        new Rectangle(
-                                col * _resolution,
-                                row * _resolution,
-                                _resolution,
-                                _resolution
-                            ),
-                        colorWithAlpha
-                    );
+                //TODO: need to fix this
+                // Globals.SpriteBatch.Draw(_squareTexture,
+                //         new Rectangle(
+                //                 col * _resolution,
+                //                 row * _resolution,
+                //                 _resolution,
+                //                 _resolution
+                //             ),
+                //         colorWithAlpha
+                //     );
             }
         }
-        Globals.SpriteBatch.End();
+        //TODO: need to fix this
+        // Globals.SpriteBatch.End();
     }
 
     public void LoadContent()
@@ -91,17 +89,18 @@ class Background : Interfaces.IDrawable
         float distance = Vector2.Distance(startPoint, endPoint);
         float angle = (float)Math.Atan2(endPoint.Y - startPoint.Y, endPoint.X - startPoint.X);
 
-        Globals.SpriteBatch.Draw(
-                _pixel,
-                startPoint,
-                null,
-                color,
-                angle,
-                Vector2.Zero,
-                new Vector2(distance, 1),
-                SpriteEffects.None,
-                0
-            );
+        //TODO: need to fix this
+        // Globals.SpriteBatch.Draw(
+        //         _pixel,
+        //         startPoint,
+        //         null,
+        //         color,
+        //         angle,
+        //         Vector2.Zero,
+        //         new Vector2(distance, 1),
+        //         SpriteEffects.None,
+        //         0
+        //     );
     }
 
     #endregion

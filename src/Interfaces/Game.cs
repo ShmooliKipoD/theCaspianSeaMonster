@@ -1,12 +1,10 @@
 using Autofac;
-using Microsoft.Xna.Framework;
 
 namespace theCaspianSeaMonster;
 public abstract class Game : Microsoft.Xna.Framework.Game
 {
     protected GraphicsDeviceManager GraphicsDeviceManager { get; }
     protected IContainer Container { get; private set; }
-
     public int Width { get; }
     public int Height { get; }
 
@@ -28,7 +26,8 @@ public abstract class Game : Microsoft.Xna.Framework.Game
     {
         ContainerBuilder containerBuilder = new();
 
-        RegisterDependencies(new());
+        RegisterDependencies(containerBuilder);
+        
         Container = containerBuilder.Build();
 
         base.Initialize();
