@@ -1,0 +1,41 @@
+1. Project Type & Framework:
+  - C# game using MonoGame Framework (v3.8.1)
+  - Targets .NET 8.0
+  - Desktop GL (cross-platform) application
+2. Key Dependencies:
+  - MonoGame.Extended
+  - MonoGame.Penumbra (lighting system)
+  - Autofac (dependency injection)
+  - SimplexNoise (procedural noise generation)
+3. Project Structure:
+  - BL/: Business logic
+  - Collisions/: Collision detection system
+  - Content/: Game assets and resources
+  - Entities/: Game entity definitions
+  - Interfaces/: Contract definitions
+  - Systems/: Core game systems including:
+    - Player system
+    - Render system
+4. Architecture:
+  - Uses a component/system-based architecture
+  - Implements dependency injection with Autofac
+  - Follows a modular design with clear separation of concerns
+5. Game Mechanics:
+  - Player-controlled character
+  - Collision detection and response
+  - Procedural generation of game content
+  - Dynamic lighting and shadowing
+6. Asset Management:
+  - Uses MonoGame's asset pipeline
+  - Supports multiple asset formats
+  - Implements asset caching for performance
+7. Development Tools:
+  - Visual Studio Code
+  - dotnet CLI
+  - Git for version control
+8. Code Style:
+  - Follows C# best practices
+  - Implements proper error handling
+  - Implements proper logging
+  - Implements proper documentation
+  - dotnet CLI
