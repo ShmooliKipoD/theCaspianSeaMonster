@@ -1,5 +1,6 @@
 using Autofac;
 using MonoGame.Extended;
+using MonoGame.Extended.Input;
 using theCaspianSeaMonster.BL;
 using theCaspianSeaMonster.Systems;
 
@@ -112,6 +113,7 @@ public class GameMain : Game
         
         _world.Update(gameTime);
         _camera.LookAt(_playerEntity.Get<Transform2>().Position);
+        KeyboardExtended.Update();
         base.Update(gameTime);
     }
 
