@@ -42,6 +42,7 @@ internal class EntityFactory
         AddAnimationCycle(spriteSheet, "Right",     new[] { 2 }, false, 0.5f);
 
         Entity entity = _world.CreateEntity();
+        entity.Attach(new Sprite(bluebird)); // Pass the required Texture2D or appropriate argument
         entity.Attach(new AnimatedSprite(spriteSheet, "Forward"));
         entity.Attach(new Transform2(Vector2.One, 0, Vector2.One * 4));
         entity.Attach(new Player());
