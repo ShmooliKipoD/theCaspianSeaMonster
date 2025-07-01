@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 using MonoGame.Extended;
 using theCaspianSeaMonster.BL;
 using theCaspianSeaMonster.Systems;
