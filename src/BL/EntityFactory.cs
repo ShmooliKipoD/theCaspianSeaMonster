@@ -5,18 +5,15 @@ using theCaspianSeaMonster.Entities;
 
 namespace theCaspianSeaMonster.BL;
 
-internal class EntityFactory
+internal class EntityFactory(
+    MonoGame.Extended.ECS.World world
+    , ContentManager content
+    )
 {
-    private World _world;
-    private ContentManager _content;
+    private MonoGame.Extended.ECS.World _world = world;
+    private ContentManager _content = content;
 
-    public EntityFactory(World world, ContentManager content)
-    {
-        _world = world;
-        _content = content;
-    }
-
-    public Entity CreatePlayer()
+    public Entity CreatePlayer(Vector2 position = default)
     {
         Texture2D bluebird = _content.Load<Texture2D>("Player/bluebirdSheet");
         Texture2DAtlas atlas = Texture2DAtlas.Create(
@@ -44,9 +41,15 @@ internal class EntityFactory
         Entity entity = _world.CreateEntity();
         entity.Attach(new Sprite(bluebird)); // Pass the required Texture2D or appropriate argument
         entity.Attach(new AnimatedSprite(spriteSheet, "Forward"));
-        entity.Attach(new Transform2(Vector2.One, 0, Vector2.One * 4));
+        entity.Attach(new Transform2(position, 0, Vector2.One * 4));
         entity.Attach(new Player());
-        entity.Attach(new Body());
+        entity.Attach(
+            new Body
+            {
+                Position = position,
+                Size = new Vector2(32, 64),
+                BodyType = BodyType.Dynamic
+            });
         return entity;
     }
 
