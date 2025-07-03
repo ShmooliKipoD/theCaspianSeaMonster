@@ -45,6 +45,7 @@ public class GameMain : Game
     protected override void LoadContent()
     {
         _world = new WorldBuilder()
+                        .AddSystem(new WorldSystem())
                         .AddSystem(new PlayerSystem())
                         .AddSystem(
                             new RenderSystem(
