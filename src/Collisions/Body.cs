@@ -11,7 +11,8 @@ public class Body
     public BodyType BodyType = BodyType.Static;
     public Vector2 Position;
     public Vector2 Velocity;
-    // public BoundingBox BoundingBox => new (Position - Size / 2f, Position + Size / 2f);
+    public AABB BoundingBox => new (Position - Size / 2f, Position + Size / 2f);
+// BoundingBox
     public Vector2 Size;
 }
 
