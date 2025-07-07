@@ -1,15 +1,12 @@
 namespace theCaspianSeaMonster.Collisions;
 
-public struct AABB
+public struct AABB(
+    Vector2 min
+    , Vector2 max
+    )
 {
-    public AABB(Vector2 min, Vector2 max)
-    {
-        Min = min;
-        Max = max;
-    }
-
-    public Vector2 Min;
-    public Vector2 Max;
+    public Vector2 Min = min;
+    public Vector2 Max = max;
     public Vector2 Center => new Vector2(CenterX, CenterY);
     public float CenterX => (Max.X - Min.X) / 2f;
     public float CenterY => (Max.Y - Min.Y) / 2f;
