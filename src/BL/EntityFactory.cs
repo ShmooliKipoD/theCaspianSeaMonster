@@ -23,7 +23,7 @@ internal class EntityFactory(
             , 32
             );
 
-        SpriteSheet spriteSheet = new ("SpriteSheet/bluebird", atlas);
+        SpriteSheet spriteSheet = new("SpriteSheet/bluebird", atlas);
 
         spriteSheet.DefineAnimation("Forward", builder =>
         {
@@ -31,23 +31,23 @@ internal class EntityFactory(
                     .AddFrame(1, TimeSpan.FromSeconds(2.5))
                     .AddFrame(2, TimeSpan.FromSeconds(0.2))
                     .AddFrame(1, TimeSpan.FromSeconds(2.5));
-                    
+
         });
 
         // AddAnimationCycle(spriteSheet, "Forward",   new[] { 1 }, true,  0.5f);
-        AddAnimationCycle(spriteSheet, "Left",      new[] { 0 }, false, 0.5f);
-        AddAnimationCycle(spriteSheet, "Right",     new[] { 2 }, false, 0.5f);
+        AddAnimationCycle(spriteSheet, "Left", [ 0 ], false, 0.5f);
+        AddAnimationCycle(spriteSheet, "Right", [ 2 ], false, 0.5f);
 
         Entity entity = _world.CreateEntity();
         entity.Attach(new Sprite(bluebird)); // Pass the required Texture2D or appropriate argument
         entity.Attach(new AnimatedSprite(spriteSheet, "Forward"));
-        entity.Attach(new Transform2(position, 0, Vector2.One * 4));
+        entity.Attach(new Transform2(position, 0, Vector2.One));
         entity.Attach(new Player());
         entity.Attach(
             new Body
             {
                 Position = position,
-                Size = new Vector2(32, 64),
+                Size = new Vector2(32, 32), // TODO: size should be taken from sprite
                 BodyType = BodyType.Dynamic
             });
         return entity;
