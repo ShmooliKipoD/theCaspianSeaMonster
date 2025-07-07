@@ -1,17 +1,12 @@
-using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 
 namespace theCaspianSeaMonster.Collisions;
 
-public class World
+public class World(
+    Vector2 gravity
+    )
 {
-    public World(Vector2 gravity)
-    {
-        Gravity = gravity;
-    }
-
-    public Vector2 Gravity { get; set; }
+    public Vector2 Gravity { get; set; } = gravity;
 
     private readonly List<Body> _dynamicBodies = new List<Body>();
     private readonly List<Body> _staticBodies = new List<Body>();
