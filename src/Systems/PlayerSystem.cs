@@ -49,7 +49,7 @@ class PlayerSystem : EntityProcessingSystem
             )
         {
             animaton.SetAnimation("Right");
-            body.Velocity.X += 150;
+            body.Position.X += 7;
         }
 
         if (keyboardState.IsKeyDown(Keys.Left)
@@ -57,21 +57,21 @@ class PlayerSystem : EntityProcessingSystem
             )
         {
             animaton.SetAnimation("Left");
-            body.Velocity.X -= 150;
+            body.Position.X -= 7;
         }
 
         if (keyboardState.IsKeyDown(Keys.Up)
             || keyboardState.IsKeyDown(Keys.W)
             )
         {
-            body.Velocity.Y -= 150;
+            body.Position.Y -= 7;
         }
 
         if (keyboardState.IsKeyDown(Keys.Down)
             || keyboardState.IsKeyDown(Keys.S)
             )
         {
-            body.Velocity.Y += 150;
+            body.Position.Y += 7;
         }
 
         // transform.Position += body.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
