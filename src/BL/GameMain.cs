@@ -29,7 +29,6 @@ public class GameMain : Game
     {
         // _penumbra = new(this);
         // Components.Add(_penumbra);
-
         // Globals.Penumbra = _penumbra;
     }
 
@@ -45,12 +44,13 @@ public class GameMain : Game
     protected override void LoadContent()
     {
         _world = new WorldBuilder()
-                        .AddSystem(new WorldSystem())
                         .AddSystem(new PlayerSystem())
+                        .AddSystem(new CheckerboardBackgroundSystem(GraphicsDevice, _camera))
+                        .AddSystem(new WorldSystem()) // INFO: order does matter, this should be before RenderSystem
                         .AddSystem(
                             new RenderSystem(
                                 new SpriteBatch(GraphicsDevice), 
-                                _camera)
+                                _camera, GraphicsDevice)
                                 )
                         .Build();
 
