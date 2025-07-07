@@ -2,14 +2,16 @@ using SimplexNoise;
 
 namespace theCaspianSeaMonster.BL;
 
-class Background //: Interfaces.IDrawable
+class Background(
+    GraphicsDevice graphicsDevice
+    )//: Interfaces.IDrawable
 {
     #region privates
 
     private int _rows;
     private int _cols;
     private Texture2D _pixel;
-    private GraphicsDevice _graphicsDevice;
+    private GraphicsDevice _graphicsDevice = graphicsDevice;
     private Texture2D _squareTexture;
     private int _resolution = 3;
     private int _zoff = 0;
@@ -17,16 +19,11 @@ class Background //: Interfaces.IDrawable
 
     #endregion
 
-    public Background(GraphicsDevice graphicsDevice)
-    {
-        this._graphicsDevice = graphicsDevice;
-    }
-
     public Vector2 Position { get; private set; } = new();
 
     public float Rotation { get; private set; }
 
-    public Vector2 Origin { get;  } = new();
+    public Vector2 Origin { get; } = new();
 
     public void Draw(GameTime gameTime = null)
     {
@@ -38,7 +35,7 @@ class Background //: Interfaces.IDrawable
         {
             for (int col = 0; col < _cols; col++)
             {
-                int alpha = (int)(Math.Pow(Noise.CalcPixel3D(row - _yoff , col, _zoff, 0.1f)/255,4)*255);
+                int alpha = (int)(Math.Pow(Noise.CalcPixel3D(row - _yoff, col, _zoff, 0.1f) / 255, 4) * 255);
 
                 Color colorWithAlpha = new Color(color.R, color.G, color.B, alpha);
                 //TODO: need to fix this
