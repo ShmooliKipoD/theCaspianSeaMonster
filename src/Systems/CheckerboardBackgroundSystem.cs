@@ -43,8 +43,8 @@ namespace theCaspianSeaMonster.Systems
 
             // Begin without any transformation matrix to keep it fixed to screen coordinates
             _spriteBatch.Begin(
-                            samplerState: SamplerState.PointClamp, 
-            transformMatrix: _camera.GetViewMatrix()
+                samplerState: SamplerState.PointClamp, 
+                transformMatrix: _camera.GetViewMatrix()
                 );
 
             for (int x = _startX; x <= endX; x++)

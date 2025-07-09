@@ -74,7 +74,6 @@ class PlayerSystem : EntityProcessingSystem
             body.Position.Y += 7;
         }
 
-        // transform.Position += body.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
     }
 }
