@@ -25,6 +25,8 @@ public class GameMain : Game
     // };
     private Entity _playerEntity;
 
+    private Entity _tilesEntity;
+
     public GameMain()
     {
         // _penumbra = new(this);
@@ -49,7 +51,7 @@ public class GameMain : Game
                         .AddSystem(new WorldSystem()) // INFO: order does matter, this should be before RenderSystem
                         .AddSystem(
                             new RenderSystem(
-                                new SpriteBatch(GraphicsDevice), 
+                                new SpriteBatch(GraphicsDevice),
                                 _camera, GraphicsDevice)
                                 )
                         .Build();
@@ -58,6 +60,7 @@ public class GameMain : Game
 
         _entityFactory = new EntityFactory(_world, Content);
         _playerEntity = _entityFactory.CreatePlayer();
+        _tilesEntity = _entityFactory.CreateGreenTiles();
         
         //_background = new (GraphicsDevice);
         // Globals.SpriteBatch = new (GraphicsDevice);;
@@ -91,7 +94,7 @@ public class GameMain : Game
         //             new Vector2(405, 395) + offset,
         //             new Vector2(395, 395)+ offset,
         //             new Vector2(395, 405)+ offset
-                    
+
         //             )
         //     );
         // }

@@ -13,6 +13,37 @@ internal class EntityFactory(
     private MonoGame.Extended.ECS.World _world = world;
     private ContentManager _content = content;
 
+    public Entity CreateGreenTiles(Vector2 position = default)
+    {
+        Texture2D greenTiles = _content.Load<Texture2D>("Maps/TheGreens");
+        Texture2DAtlas atlas = Texture2DAtlas.Create(
+            "Atlas/greenTilesAtlas"
+            , greenTiles
+            , 32
+            , 32
+            );
+
+        SpriteSheet spriteSheet = new("SpriteSheet/greenTiles", atlas);
+
+        // spriteSheet.DefineAnimation("UpwardCliff", builder =>
+        // {
+        //     builder.IsLooping(true)
+        //             .AddFrame(0, TimeSpan.FromSeconds(0.2))
+        //             .AddFrame(1, TimeSpan.FromSeconds(0.2))
+        //             .AddFrame(2, TimeSpan.FromSeconds(0.2));
+
+        // });
+
+        AddAnimationCycle(spriteSheet, "UpwardCliff", [0, 1, 2], true, 0.2f);
+
+        Entity entity = _world.CreateEntity();
+        entity.Attach(new Sprite(greenTiles)); // Pass the required Texture2D or appropriate argument
+        entity.Attach(new AnimatedSprite(spriteSheet, "UpwardCliff"));
+        entity.Attach(new Transform2(position, 0, Vector2.One));
+
+        return entity;
+    }
+
     public Entity CreatePlayer(Vector2 position = default)
     {
         Texture2D bluebird = _content.Load<Texture2D>("Player/bluebirdSheet");
@@ -35,8 +66,8 @@ internal class EntityFactory(
         });
 
         // AddAnimationCycle(spriteSheet, "Forward",   new[] { 1 }, true,  0.5f);
-        AddAnimationCycle(spriteSheet, "Left", [ 0 ], false, 0.5f);
-        AddAnimationCycle(spriteSheet, "Right", [ 2 ], false, 0.5f);
+        AddAnimationCycle(spriteSheet, "Left", [0], false, 0.5f);
+        AddAnimationCycle(spriteSheet, "Right", [2], false, 0.5f);
 
         Entity entity = _world.CreateEntity();
         entity.Attach(new Sprite(bluebird)); // Pass the required Texture2D or appropriate argument
